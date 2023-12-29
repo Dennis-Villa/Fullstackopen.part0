@@ -3,27 +3,15 @@ sequenceDiagram
     participant browser
     participant server
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    Note right of browser: The user types something in the <br/>text field and clicks on the form button
+
+    Note right of browser: The application adds the new note and <br/>re-renders the list of notes on the page locally <br/>and sends the new note to the server
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/notes <br/> JSON data: {"content":"<note_text>","date":"<creation_date>"}
     activate server
-    server-->>browser: HTML document
+    server-->>browser: JSON data: {"message":"note created"}
     deactivate server
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
-    activate server
-    server-->>browser: the css file
-    deactivate server
+    Note right of browser: The server returns a message indicating <br/>that the note was successfully added
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
-    activate server
-    server-->>browser: the JavaScript file
-    deactivate server
-
-    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
-
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
-    activate server
-    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
-    deactivate server
-
-    Note right of browser: The browser executes the callback function that renders the notes
 ```
